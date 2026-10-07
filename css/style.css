@@ -78,7 +78,7 @@ h2 { font-size: 1.05rem; margin: 24px 0 10px; }
 /* form */
 .back { color: var(--muted); text-decoration: none; display: inline-block; margin-bottom: 12px; }
 form label { display: block; margin: 18px 0 6px; font-weight: 600; font-size: 0.95rem; }
-input[type="text"], input[type="number"], select {
+input[type="text"], input[type="number"], input[type="date"], select {
   width: 100%; padding: 12px; font: inherit; color: var(--ink);
   background: transparent; border: 1px solid var(--line); border-radius: 8px;
 }
@@ -114,4 +114,41 @@ fieldset.options { border: 0; padding: 0; margin: 18px 0 0; }
   border-radius: 8px; cursor: pointer;
 }
 .danger:focus-visible { outline: 2px solid var(--error); outline-offset: 2px; }
+
+/* profile */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.top h1 { margin: 0; }
+.avatar {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+  font-weight: 600; text-decoration: none; line-height: 1;
+}
+.avatar-btn { width: 40px; height: 40px; font-size: 1.1rem; }
+.avatar-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.birthday { color: var(--accent); font-weight: 600; margin: 4px 0 0; }
+.profile { text-align: center; }
+.avatar.big {
+  --size: min(70vw, 36vh, 320px);
+  width: var(--size); height: var(--size); font-size: calc(var(--size) * 0.42);
+  margin: 12px auto 20px;
+}
+.profile-name { font-size: 1.5rem; margin: 0 0 4px; }
+.profile-name.muted { color: var(--muted); font-weight: 500; }
+.profile-since { color: var(--muted); margin: 0 0 20px; }
+.btn-outline {
+  display: inline-block; padding: 12px 28px; font-weight: 600; text-decoration: none;
+  color: var(--accent); border: 1px solid var(--accent); border-radius: 8px;
+}
+.btn-outline:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sep { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+.hint { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
+.icons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.icon-opt { position: relative; display: block; margin: 0; padding: 0; }
+.icon-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.icon-opt .avatar {
+  width: 52px; height: 52px; font-size: 1.5rem;
+  background: transparent; color: var(--ink); border: 2px solid var(--line);
+}
+.icon-opt input:checked + .avatar { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.icon-opt input:focus-visible + .avatar { outline: 2px solid var(--accent); outline-offset: 4px; }
 [hidden] { display: none !important; }

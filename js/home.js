@@ -22,3 +22,11 @@ todayEmpty.textContent = habits.length === 0
   : 'Nothing due today.';
 todayEmpty.hidden = todayCount > 0;
 weekSection.hidden = weekCount === 0;
+
+// Birthday wish
+const birthdayEl = document.getElementById('birthday');
+const me = Profile.get();
+if (isBirthdayToday(me.dob, TODAY)) {
+  birthdayEl.textContent = 'Happy birthday' + (me.name ? ', ' + me.name : '') + '!';
+  birthdayEl.hidden = false;
+}
