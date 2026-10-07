@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>New habit · Mostly habits</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <a href="habits.html" class="back">Back</a>
+    <h1>New habit</h1>
+
+    <form id="habit-form" novalidate>
+      <label for="name">Name</label>
+      <input id="name" type="text" maxlength="60" placeholder="e.g. Read 20 pages" autocomplete="off">
+
+      <fieldset class="options">
+        <legend>How often</legend>
+
+        <label class="opt">
+          <input type="radio" name="freq" value="daily" checked>
+          <span>Every day</span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="freq" value="weekly">
+          <span>Times a week <small>Any days, you pick how many</small></span>
+        </label>
+        <div id="weekly-box" class="days" hidden>
+          <label><input type="radio" name="wk" value="1">1</label>
+          <label><input type="radio" name="wk" value="2">2</label>
+          <label><input type="radio" name="wk" value="3">3</label>
+          <label><input type="radio" name="wk" value="4">4</label>
+          <label><input type="radio" name="wk" value="5" checked>5</label>
+          <label><input type="radio" name="wk" value="6">6</label>
+          <label><input type="radio" name="wk" value="7">7</label>
+        </div>
+
+        <label class="opt">
+          <input type="radio" name="freq" value="weekdays">
+          <span>Specific days <small>For example Wed and Fri</small></span>
+        </label>
+        <div id="weekdays-box" class="days" hidden>
+          <label><input type="checkbox" value="1">Mon</label>
+          <label><input type="checkbox" value="2">Tue</label>
+          <label><input type="checkbox" value="3">Wed</label>
+          <label><input type="checkbox" value="4">Thu</label>
+          <label><input type="checkbox" value="5">Fri</label>
+          <label><input type="checkbox" value="6">Sat</label>
+          <label><input type="checkbox" value="0">Sun</label>
+        </div>
+
+        <label class="opt">
+          <input type="radio" name="freq" value="every">
+          <span>Every few days <small>Every 2 days is alternate days</small></span>
+        </label>
+        <div id="every-box" class="inline" hidden>
+          <span>Once every</span>
+          <input id="every-n" type="number" min="2" max="30" value="2" inputmode="numeric">
+          <span>days</span>
+        </div>
+      </fieldset>
+
+      <p id="error" class="error" role="alert" hidden></p>
+      <button type="submit" class="primary">Save habit</button>
+    </form>
+  </main>
+  <script src="js/store.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/add.js"></script>
+</body>
+</html>
