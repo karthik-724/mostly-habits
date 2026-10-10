@@ -3,25 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>Mostly habits</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
 </head>
 <body data-page="home">
   <main class="page">
     <header class="top">
-      <h1>Mostly habits</h1>
+      <a href="index.html" class="brand" aria-label="Mostly habits, home"><span class="brand-main">Mostly</span> <span class="brand-sub">habits</span></a>
       <a href="profile.html" id="profile-btn" class="avatar avatar-btn" aria-label="Profile"></a>
     </header>
-    <p id="birthday" class="birthday" hidden></p>
+
+    <div class="hello">
+      <h1 id="greeting">Hi there</h1>
+      <p id="today-date" class="date"></p>
+      <p id="birthday" class="birthday" hidden></p>
+    </div>
 
     <section>
-      <h2>Today</h2>
+      <div class="section-head">
+        <h2>Today</h2>
+        <span id="today-progress" class="progress" hidden></span>
+      </div>
       <ul id="today-list" class="list"></ul>
       <p id="today-empty" class="empty" hidden></p>
     </section>
 
     <section id="week-section" hidden>
-      <h2>This week</h2>
+      <div class="section-head">
+        <h2>This week</h2>
+      </div>
       <ul id="week-list" class="list"></ul>
     </section>
   </main>

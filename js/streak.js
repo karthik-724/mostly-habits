@@ -16,9 +16,9 @@ function shiftDay(s, k) {
 function dayDiff(a, b) { // a - b in days
   return Math.round((parseDateStr(a) - parseDateStr(b)) / 86400000);
 }
-function weekStart(s) { // Monday of that week
+function weekStart(s) { // Sunday of that week (weeks run Sunday to Saturday)
   const d = parseDateStr(s);
-  d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  d.setDate(d.getDate() - d.getDay());
   return toDateStr(d);
 }
 
@@ -26,7 +26,7 @@ function weekStart(s) { // Monday of that week
 // What counts as "broken" depends on the habit's frequency:
 //  daily / specific days : a due day passed without being done
 //  every N days          : more than N days passed between two completions
-//  N times a week        : a finished week (Mon-Sun) with fewer than N completions
+//  N times a week        : a finished week (Sun-Sat) with fewer than N completions
 function calcStreak(habit, dates, today) {
   if (!dates.length) return 0;
   const done = new Set(dates);
@@ -87,18 +87,55 @@ function isDueToday(habit, dates, today) {
   if (f.type === 'daily') return true;
   if (f.type === 'weekdays') return f.days.includes(parseDateStr(today).getDay());
   if (f.type === 'every') {
-    if (dates.includes(today)) return true;
-    const prior = dates.filter(d => d < today).sort();
-    const next = prior.length
-      ? shiftDay(prior[prior.length - 1], f.n)
-      : toDateStr(new Date(habit.createdAt));
-    return next <= today;
+    return dates.includes(today) || everyNextDue(habit, dates, today) <= today;
   }
   return false;
 }
 
-// How many days of the current week (Mon-Sun) are marked done.
+// Day an every-N-days habit is next due: N days after the last completion
+// before today, or its start day if it was never done.
+function everyNextDue(habit, dates, today) {
+  const prior = dates.filter(d => d < today).sort();
+  return prior.length
+    ? shiftDay(prior[prior.length - 1], habit.freq.n)
+    : toDateStr(new Date(habit.createdAt));
+}
+
+// How many days of the current week (Sun-Sat) are marked done.
 function weekDoneCount(dates, today) {
   const ws = weekStart(today);
   return dates.filter(d => weekStart(d) === ws).length;
+}
+
+// ---- Priority colours -------------------------------------------------
+// Tweak these two numbers to change how quickly things turn red or orange.
+const EVENING_HOUR = 20;   // due-today habits turn red from this hour
+const ORANGE_MAX_SLACK = 2; // weekly habits with this many spare days or fewer are orange
+
+// Returns 'red' | 'orange' | 'yellow' | 'done' | 'none'.
+//  N times a week : compare days still needed with days left (Sun-Sat).
+//                   no spare day -> red, a little spare -> orange, lots -> yellow,
+//                   target already met -> done
+//  due today      : orange, red once it is evening or an every-N habit is overdue,
+//                   done once ticked
+//  not due today  : none
+function priorityFor(habit, dates, today, hour) {
+  const f = habit.freq;
+  const doneToday = dates.includes(today);
+
+  if (f.type === 'weekly') {
+    const need = f.n - weekDoneCount(dates, today);
+    if (need <= 0) return 'done';
+    const daysLeft = 7 - parseDateStr(today).getDay();      // includes today
+    const available = daysLeft - (doneToday ? 1 : 0);       // today can't be used twice
+    const slack = available - need;
+    if (slack <= 0) return 'red';
+    if (slack <= ORANGE_MAX_SLACK) return 'orange';
+    return 'yellow';
+  }
+
+  if (!isDueToday(habit, dates, today)) return 'none';
+  if (doneToday) return 'done';
+  if (f.type === 'every' && everyNextDue(habit, dates, today) < today) return 'red';
+  return hour >= EVENING_HOUR ? 'red' : 'orange';
 }

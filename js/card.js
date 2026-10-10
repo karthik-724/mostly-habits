@@ -1,11 +1,12 @@
 // Builds one habit card. Used by the Home and Habits pages.
 // opts: { link: name area opens the edit page, showFreq: show frequency line,
-//         weekCount: show "done/N" for N-times-a-week habits }
+//         weekCount: show "done/N" for N-times-a-week habits,
+//         onChange: called after the tick is toggled }
 const TODAY = toDateStr(new Date());
 
 function streakText(n) {
   if (n === 0) return 'No streak yet';
-  return n + (n === 1 ? ' day' : ' days') + ' streak';
+  return '\u{1F525} ' + n + (n === 1 ? ' day' : ' days');
 }
 
 function buildCard(h, opts) {
@@ -48,19 +49,29 @@ function buildCard(h, opts) {
   function refresh() {
     const dates = Logs.dates(h.id);
     const done = dates.includes(TODAY);
+    const n = calcStreak(h, dates, TODAY);
+
     btn.setAttribute('aria-pressed', done);
     btn.setAttribute('aria-label', (done ? 'Undo done: ' : 'Mark done: ') + h.name);
     btn.textContent = done ? '\u2713' : '';
-    streak.textContent = streakText(calcStreak(h, dates, TODAY));
+
+    streak.textContent = streakText(n);
+    streak.classList.toggle('none', n === 0);
+    if (n > 0) streak.setAttribute('aria-label', n + (n === 1 ? ' day streak' : ' day streak'));
+    else streak.removeAttribute('aria-label');
+
     if (count) {
       count.textContent = weekDoneCount(dates, TODAY) + '/' + h.freq.n;
       count.setAttribute('aria-label', count.textContent.replace('/', ' of ') + ' this week');
     }
+
+    li.dataset.pri = priorityFor(h, dates, TODAY, new Date().getHours());
   }
 
   btn.addEventListener('click', () => {
     Logs.toggle(h.id, TODAY);
     refresh();
+    if (opts.onChange) opts.onChange();
   });
 
   refresh();

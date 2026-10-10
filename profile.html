@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>Profile · Mostly habits</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
 </head>
 <body data-page="profile">
   <main class="page">
@@ -18,7 +20,10 @@
     </section>
 
     <hr class="sep">
-    <section id="profile-options"><!-- future options go here --></section>
+    <section id="profile-options">
+      <h2>Appearance</h2>
+      <div id="theme-options" class="segmented" role="radiogroup" aria-label="Theme"></div>
+    </section>
   </main>
   <script src="js/store.js"></script>
   <script src="js/streak.js"></script>
