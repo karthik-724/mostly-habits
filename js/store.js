@@ -23,6 +23,15 @@ const Store = {
     this._save(list);
   },
 
+  // Saves a new order. `ids` is the full list of habit ids in the order you want.
+  reorder(ids) {
+    const all = this.all();
+    const byId = new Map(all.map(h => [h.id, h]));
+    const next = ids.map(id => byId.get(id)).filter(Boolean);
+    all.forEach(h => { if (!ids.includes(h.id)) next.push(h); }); // never lose a habit
+    this._save(next);
+  },
+
   // Removes the habit and its completion history.
   remove(id) {
     this._save(this.all().filter(h => h.id !== id));

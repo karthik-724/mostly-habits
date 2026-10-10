@@ -140,6 +140,32 @@ h2 { font-size: 1rem; font-weight: 600; margin: 0; }
   .tick { transition: none; }
   .tick:active { transform: none; }
 }
+/* Habits page: drag handle + edit pencil */
+.list.manage li { gap: 6px; padding-left: 10px; }
+.grip-btn {
+  flex: none; width: 28px; height: 44px; padding: 0; border: 0; background: none;
+  display: flex; align-items: center; justify-content: center; color: var(--muted);
+  cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.grip {
+  width: 12px; height: 18px;
+  background: radial-gradient(circle, currentColor 1.6px, transparent 2px) 0 0 / 6px 6px;
+}
+.grip-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 8px; }
+.icon-btn {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted); text-decoration: none;
+}
+.icon-btn:hover { color: var(--ink); background: var(--bg); }
+.icon-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.list li.dragging {
+  position: relative; z-index: 2; cursor: grabbing;
+  box-shadow: inset 4px 0 0 var(--pri), 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+body.reordering { user-select: none; -webkit-user-select: none; cursor: grabbing; }
+
 .empty { color: var(--muted); margin: 4px 0 0; padding: 12px 0; }
 
 /* ---------- add button + bottom nav ---------- */
