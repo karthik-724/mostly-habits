@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>List · Mostly habits</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <main class="page">
+    <a href="tasks.html#lists" class="back">Back</a>
+
+    <header class="top list-head">
+      <input id="list-name" class="list-name" type="text" maxlength="60"
+             placeholder="List name" aria-label="List name" autocomplete="off">
+      <button type="button" id="delete-list" class="icon-btn" aria-label="Delete list" hidden></button>
+    </header>
+
+    <ul id="open-items" class="check-list"></ul>
+
+    <div class="add-row">
+      <button type="button" id="add-item" class="plus-light" aria-label="Add item">+</button>
+      <input id="new-item" class="new-item" type="text" maxlength="100"
+             placeholder="Add item" aria-label="New item" autocomplete="off" enterkeyhint="done">
+    </div>
+
+    <section id="checked-section" hidden>
+      <p id="checked-label" class="divider-label"></p>
+      <ul id="checked-items" class="check-list"></ul>
+    </section>
+
+    <p id="error" class="error" role="alert" hidden></p>
+    <button type="button" id="create-list" class="primary" hidden>Create list</button>
+  </main>
+  <script src="js/store.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/list.js"></script>
+</body>
+</html>

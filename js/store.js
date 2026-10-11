@@ -127,3 +127,29 @@ const Tasks = {
     return t.done;
   }
 };
+
+// Lists: { id, name, items: [{ id, text, done }], createdAt }
+const Lists = {
+  KEY: 'mostly.lists',
+
+  all() {
+    try { return JSON.parse(localStorage.getItem(this.KEY)) || []; }
+    catch (e) { return []; }
+  },
+
+  _save(all) { localStorage.setItem(this.KEY, JSON.stringify(all)); },
+
+  get(id) { return this.all().find(l => l.id === id) || null; },
+
+  add(list) {
+    const all = this.all();
+    all.push(list);
+    this._save(all);
+  },
+
+  update(id, changes) {
+    this._save(this.all().map(l => (l.id === id ? Object.assign({}, l, changes) : l)));
+  },
+
+  remove(id) { this._save(this.all().filter(l => l.id !== id)); }
+};
