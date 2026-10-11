@@ -139,3 +139,14 @@ function priorityFor(habit, dates, today, hour) {
   if (f.type === 'every' && everyNextDue(habit, dates, today) < today) return 'red';
   return hour >= EVENING_HOUR ? 'red' : 'orange';
 }
+
+// "Today" for the page, fixed when it loads. If the app stays open past
+// midnight, list pages reload so everything is recalculated.
+const TODAY = toDateStr(new Date());
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    const page = document.body.dataset.page;
+    if (!document.hidden && ['home', 'tasks', 'habits'].includes(page) &&
+        toDateStr(new Date()) !== TODAY) location.reload();
+  });
+}

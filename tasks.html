@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Tasks · Mostly habits</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body data-page="tasks">
+  <main class="page">
+    <header class="top">
+      <h1>Tasks</h1>
+      <a href="profile.html" id="profile-btn" class="avatar avatar-btn" aria-label="Profile"></a>
+    </header>
+    <ul id="task-list" class="list"></ul>
+    <p id="empty" class="empty" hidden>No tasks yet. Tap + to add your first one.</p>
+    <section id="done-section" hidden>
+      <div class="section-head"><h2>Completed</h2></div>
+      <ul id="done-list" class="list"></ul>
+    </section>
+  </main>
+  <a href="add-task.html" class="fab" aria-label="Add task">+</a>
+  <script src="js/store.js"></script>
+  <script src="js/streak.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/task-logic.js"></script>
+  <script src="js/task-card.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/tasks.js"></script>
+</body>
+</html>

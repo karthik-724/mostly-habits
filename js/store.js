@@ -82,3 +82,39 @@ const Logs = {
     return i === -1;
   }
 };
+
+// Tasks: { id, name, date: 'YYYY-MM-DD', allDay, start: 'HH:MM', end: 'HH:MM', done, createdAt }
+const Tasks = {
+  KEY: 'mostly.tasks',
+
+  all() {
+    try { return JSON.parse(localStorage.getItem(this.KEY)) || []; }
+    catch (e) { return []; }
+  },
+
+  _save(list) { localStorage.setItem(this.KEY, JSON.stringify(list)); },
+
+  get(id) { return this.all().find(t => t.id === id) || null; },
+
+  add(task) {
+    const list = this.all();
+    list.push(task);
+    this._save(list);
+  },
+
+  update(id, changes) {
+    this._save(this.all().map(t => (t.id === id ? Object.assign({}, t, changes) : t)));
+  },
+
+  remove(id) { this._save(this.all().filter(t => t.id !== id)); },
+
+  // Flips done/not done. Returns the new state.
+  toggle(id) {
+    const list = this.all();
+    const t = list.find(x => x.id === id);
+    if (!t) return false;
+    t.done = !t.done;
+    this._save(list);
+    return t.done;
+  }
+};

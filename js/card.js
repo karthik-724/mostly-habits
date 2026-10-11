@@ -3,8 +3,6 @@
 //         showFreq: show frequency line,
 //         weekCount: show "done/N" for N-times-a-week habits,
 //         onChange: called after the tick is toggled }
-const TODAY = toDateStr(new Date());
-
 function streakText(n) {
   if (n === 0) return 'No streak yet';
   return '\u{1F525} ' + n + (n === 1 ? ' day' : ' days');
@@ -59,10 +57,7 @@ function buildCard(h, opts) {
     edit.className = 'icon-btn';
     edit.href = 'edit.html?id=' + encodeURIComponent(h.id);
     edit.setAttribute('aria-label', 'Edit ' + h.name);
-    edit.innerHTML =
-      '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" ' +
-      'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-      '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+    edit.innerHTML = ICON_PENCIL;
     li.appendChild(edit);
   }
 
@@ -102,8 +97,3 @@ function buildCard(h, opts) {
   refresh();
   return li;
 }
-
-// If the app stays open past midnight, reload so "today" is correct.
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && toDateStr(new Date()) !== TODAY) location.reload();
-});

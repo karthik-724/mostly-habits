@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Edit task · Mostly habits</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <main class="page">
+    <a href="tasks.html" class="back">Back</a>
+    <h1>Edit task</h1>
+
+    <form id="task-form" novalidate>
+      <label for="name">Task</label>
+      <input id="name" type="text" maxlength="80" placeholder="e.g. Submit the report" autocomplete="off">
+
+      <label for="date">Deadline date</label>
+      <input id="date" type="date">
+
+      <fieldset class="options">
+        <legend>Time</legend>
+        <label class="opt">
+          <input type="radio" name="time" value="allday" checked>
+          <span>All day</span>
+        </label>
+        <label class="opt">
+          <input type="radio" name="time" value="timed">
+          <span>Specific time <small>Pick a start and an end time</small></span>
+        </label>
+        <div id="time-box" class="timebox" hidden>
+          <div>
+            <label for="start">Start</label>
+            <input id="start" type="time">
+          </div>
+          <div>
+            <label for="end">End</label>
+            <input id="end" type="time">
+          </div>
+        </div>
+      </fieldset>
+
+      <p id="error" class="error" role="alert" hidden></p>
+      <button type="submit" class="primary">Save changes</button>
+      <button type="button" id="delete-btn" class="danger">Delete task</button>
+    </form>
+  </main>
+  <script src="js/store.js"></script>
+  <script src="js/streak.js"></script>
+  <script src="js/task-logic.js"></script>
+  <script src="js/task-form.js"></script>
+  <script src="js/edit-task.js"></script>
+</body>
+</html>

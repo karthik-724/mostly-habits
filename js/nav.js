@@ -1,7 +1,8 @@
-// Bottom navigation. Each page sets <body data-page="home|habits">.
+// Bottom navigation. Each page sets <body data-page="home|tasks|habits">.
 (function () {
   const tabs = [
     { id: 'home', label: 'Home', href: 'index.html' },
+    { id: 'tasks', label: 'Tasks', href: 'tasks.html' },
     { id: 'habits', label: 'Habits', href: 'habits.html' }
   ];
   const nav = document.createElement('nav');
