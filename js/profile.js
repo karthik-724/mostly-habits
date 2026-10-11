@@ -51,7 +51,7 @@ function paintAvatar(el, profile) {
 
 function sinceText(iso) {
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
-  if (days < 1) return 'Started using Mostly today';
+  if (days < 1) return 'Started using Mostly habits today';
   let span;
   if (days < 60) span = days + (days === 1 ? ' day' : ' days');
   else if (days < 365) span = Math.floor(days / 30) + ' months';
@@ -59,7 +59,7 @@ function sinceText(iso) {
     const y = Math.floor(days / 365);
     span = y + (y === 1 ? ' year' : ' years');
   }
-  return 'Using Mostly for ' + span;
+  return 'Using Mostly habits for ' + span;
 }
 
 // today is 'YYYY-MM-DD'. A 29 Feb birthday is celebrated on 28 Feb in non-leap years.
