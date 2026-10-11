@@ -65,6 +65,15 @@ const Logs = {
 
   has(id, date) { return this.dates(id).includes(date); },
 
+  // Marks several days done at once (used when a habit is started in the past).
+  addMany(id, dates) {
+    const all = this._read();
+    const set = new Set(all[id] || []);
+    dates.forEach(d => set.add(d));
+    all[id] = [...set].sort();
+    localStorage.setItem(this.KEY, JSON.stringify(all));
+  },
+
   remove(id) {
     const all = this._read();
     delete all[id];

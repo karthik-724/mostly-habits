@@ -17,8 +17,14 @@
       <label for="name">Name</label>
       <input id="name" type="text" maxlength="60" placeholder="e.g. Read 20 pages" autocomplete="off">
 
-      <fieldset class="options">
-        <legend>How often</legend>
+      <span id="freq-label" class="field-label">How often</span>
+      <button type="button" id="freq-toggle" class="fold-head" aria-expanded="false"
+              aria-controls="freq-body" aria-labelledby="freq-label freq-summary">
+        <span id="freq-summary">Every day</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+
+      <div id="freq-body" class="options fold-body" role="group" aria-labelledby="freq-label" hidden>
 
         <label class="opt">
           <input type="radio" name="freq" value="daily" checked>
@@ -62,7 +68,7 @@
           <input id="every-n" type="number" min="2" max="30" value="2" inputmode="numeric">
           <span>days</span>
         </div>
-      </fieldset>
+      </div>
 
       <p id="error" class="error" role="alert" hidden></p>
       <button type="submit" class="primary">Save changes</button>

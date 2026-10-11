@@ -150,3 +150,29 @@ if (typeof document !== 'undefined') {
         toDateStr(new Date()) !== TODAY) location.reload();
   });
 }
+
+// Days to mark as done when a habit is started in the past: every day it was due
+// from `start` up to yesterday (today stays open to tick).
+//  daily / specific days : each due day
+//  every N days          : start day, then every N days
+//  N times a week        : the first N days of each week (Sun-Sat) in the range
+function backfillDates(freq, start, today) {
+  const out = [];
+  if (start >= today) return out;
+  const yesterday = shiftDay(today, -1);
+
+  if (freq.type === 'daily' || freq.type === 'weekdays') {
+    for (let d = start; d <= yesterday; d = shiftDay(d, 1)) {
+      if (freq.type === 'daily' || freq.days.includes(parseDateStr(d).getDay())) out.push(d);
+    }
+  } else if (freq.type === 'every') {
+    for (let d = start; d <= yesterday; d = shiftDay(d, freq.n)) out.push(d);
+  } else if (freq.type === 'weekly') {
+    const perWeek = {};
+    for (let d = start; d <= yesterday; d = shiftDay(d, 1)) {
+      const w = weekStart(d);
+      if ((perWeek[w] || 0) < freq.n) { out.push(d); perWeek[w] = (perWeek[w] || 0) + 1; }
+    }
+  }
+  return out;
+}

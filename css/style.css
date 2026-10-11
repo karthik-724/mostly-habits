@@ -217,6 +217,20 @@ input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px s
 .hint { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
 
 fieldset.options { border: 0; padding: 0; margin: 18px 0 0; }
+.field-label { display: block; margin: 18px 0 6px; font-weight: 600; font-size: 0.95rem; }
+.fold-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; padding: 12px; font: inherit; color: var(--ink); text-align: left;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
+}
+.chev {
+  flex: none; width: 8px; height: 8px; margin-right: 4px;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.15s;
+}
+.fold-head[aria-expanded="true"] .chev { transform: translateY(2px) rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+.fold-body { margin-top: 6px; }
 .options legend { padding: 0; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; }
 .options .opt {
   display: flex; align-items: flex-start; gap: 12px; margin: 0; padding: 12px 0;

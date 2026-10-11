@@ -6,6 +6,9 @@ const weekdaysBox = document.getElementById('weekdays-box');
 const everyBox = document.getElementById('every-box');
 const everyN = document.getElementById('every-n');
 const errorEl = document.getElementById('error');
+const freqToggle = document.getElementById('freq-toggle');
+const freqBody = document.getElementById('freq-body');
+const freqSummary = document.getElementById('freq-summary');
 
 function selectedFreq() {
   return form.querySelector('input[name="freq"]:checked').value;
@@ -19,6 +22,31 @@ function syncFields() {
 }
 form.querySelectorAll('input[name="freq"]').forEach(r => r.addEventListener('change', syncFields));
 syncFields();
+
+// "How often" folds away; the closed state shows a one-line summary.
+function setFreqOpen(open) {
+  freqBody.hidden = !open;
+  freqToggle.setAttribute('aria-expanded', open);
+}
+freqToggle.addEventListener('click', () => setFreqOpen(freqBody.hidden));
+
+function draftFreq() { // current choice, without validation (for the summary only)
+  const t = selectedFreq();
+  if (t === 'weekly') return { type: 'weekly', n: parseInt(form.querySelector('input[name="wk"]:checked').value, 10) };
+  if (t === 'every') return { type: 'every', n: Math.max(2, parseInt(everyN.value, 10) || 2) };
+  if (t === 'weekdays') {
+    return { type: 'weekdays', days: [...weekdaysBox.querySelectorAll('input:checked')].map(i => parseInt(i.value, 10)) };
+  }
+  return { type: 'daily' };
+}
+
+function updateSummary() {
+  const f = draftFreq();
+  freqSummary.textContent = f.type === 'weekdays' && !f.days.length ? 'Specific days' : describeFreq(f);
+}
+form.addEventListener('change', updateSummary);
+form.addEventListener('input', updateSummary);
+updateSummary();
 
 function showError(msg) {
   errorEl.textContent = msg;
@@ -36,12 +64,12 @@ function buildFreq() {
 
   if (t === 'every') {
     const n = parseInt(everyN.value, 10);
-    if (!n || n < 2 || n > 30) { showError('Enter a number of days between 2 and 30.'); return null; }
+    if (!n || n < 2 || n > 30) { setFreqOpen(true); showError('Enter a number of days between 2 and 30.'); return null; }
     return { type: 'every', n };
   }
 
   const days = [...weekdaysBox.querySelectorAll('input:checked')].map(i => parseInt(i.value, 10));
-  if (!days.length) { showError('Pick at least one day of the week.'); return null; }
+  if (!days.length) { setFreqOpen(true); showError('Pick at least one day of the week.'); return null; }
   return { type: 'weekdays', days };
 }
 
@@ -70,4 +98,5 @@ function fillForm(habit) {
     everyN.value = f.n;
   }
   syncFields();
+  updateSummary();
 }
