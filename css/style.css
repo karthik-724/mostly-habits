@@ -416,3 +416,15 @@ input.list-name:focus-visible { outline: none; border-bottom-color: var(--ink); 
 .soon svg { display: block; margin: 0 auto 16px; }
 .soon-title { font-family: var(--display); font-weight: 600; font-size: 1.5rem; color: var(--ink); margin: 0 0 4px; }
 .soon-text { margin: 0; }
+
+/* ---------- backup ---------- */
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+button.btn-outline { font: inherit; font-weight: 600; background: transparent; cursor: pointer; }
+.status { margin: 10px 0 0; font-weight: 600; }
+.status:empty { display: none; }
+.status.ok { color: var(--brand); }
+.status.error { color: var(--red); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

@@ -23,12 +23,23 @@
     <section id="profile-options">
       <h2>Appearance</h2>
       <div id="theme-options" class="segmented" role="radiogroup" aria-label="Theme"></div>
+
+      <h2>Backup</h2>
+      <p class="hint">Save your habits, tasks, lists and profile as a file. Import it to restore them or to move to another device.</p>
+      <div class="btn-row">
+        <button type="button" id="export-btn" class="btn-outline">Export data</button>
+        <button type="button" id="import-btn" class="btn-outline">Import data</button>
+      </div>
+      <input type="file" id="import-file" class="sr-only" accept="application/json,.json" tabindex="-1" aria-hidden="true">
+      <p id="backup-last" class="hint"></p>
+      <p id="backup-status" class="status" role="status" aria-live="polite"></p>
     </section>
   </main>
   <script src="js/store.js"></script>
   <script src="js/streak.js"></script>
   <script src="js/profile.js"></script>
   <script src="js/nav.js"></script>
+  <script src="js/backup.js"></script>
   <script src="js/profile-page.js"></script>
 </body>
 </html>
